@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function(){
           content: ""
       });
       google.maps.event.addListener(marker, "click", function(){
-        infoWindow.setContent(res.name +  "<button type='button' id='comment'>Comment!</button");
+        infoWindow.setContent(res.name +  "<button type='button' class='waves-effect waves-light btn' id='comment'>Comment!</button");
         infoWindow.open(map, this);
 
         document.querySelector("#comment").addEventListener("click", function(){
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
             //push comment
             var commentBtn = document.querySelector("#comment-btn");
-
+      
             commentBtn.addEventListener("click", function(){
 
             restaurant["comments"].push(document.querySelector("#comment-area").value);
