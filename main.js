@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", function(){
   var url = 'http://localhost:3000/';
   var herokuURL = "https://fathomless-island-46232.herokuapp.com/"
 
+  //image to save
+  var uploadedImage;
+
   /*
     After speaking with Harry Hur, reading the AWS S3 Docs and looking at tutorials
     these are the sources I used within the back and front-end
@@ -45,6 +48,22 @@ document.addEventListener("DOMContentLoaded", function(){
    }).done(function(data){
      displayImages(data);
    });
+
+   var fileName = document.querySelector("#file-input").files[0].name;
+   var restaurantName = document.querySelector("#restaurant-name").innerText;
+   var data = {
+     name: restaurantName,
+     fileName: fileName
+   };
+   $.ajax({
+      type: "POST",
+      url: url + "restaurant/" + restaurantName,
+      data: data,
+      dataType: 'json'
+   }).done(function(response){
+     console.log("saved fileName with restaurant");
+   });
+
   })
 
   searchBtn.addEventListener("click", function(){
@@ -120,15 +139,29 @@ document.addEventListener("DOMContentLoaded", function(){
             var commentArea = document.querySelector("#comment-area");
             commentArea.value = "";
 
-            //get images to display
+            //get image by name and corressponding restaurant-name
             $.ajax({
-              url: herokuURL + "restaurants/img",
-            //  url: 'http://localhost:3000/restaurants/img',
+              url: url + "restaurants/favorite/" + restaurant.name,
               dataType: 'json'
             }).done(function(data){
-              //console.log(data);
-              displayImages(data);
-            });
+                var fileNames = parseForFileNames(data);
+                var d = {
+                  files: fileNames
+                };
+                //get images to display
+                $.ajax({
+                  //url: herokuURL + "restaurants/img",
+                  url: url + "restaurants/img",
+                  dataType: 'json',
+                  data: d,
+                  method: "POST"
+                }).done(function(data){
+                  //console.log(data);
+                  displayImages(data);
+                });
+            })
+
+
 
             //animate so the panels move
             $(panel).slideDown("slow")
@@ -200,8 +233,6 @@ document.addEventListener("DOMContentLoaded", function(){
             button.addEventListener("click", function(){
               deleteComment(restaurantName,$(this).siblings());
             });
-
-
           }
         }
       }
@@ -223,6 +254,20 @@ document.addEventListener("DOMContentLoaded", function(){
         console.log(commentValue + " has been deleted.");
     }); // end ajax;
 
+  }
+
+  //this parses for files names
+  function parseForFileNames(data){
+    var fileNames = [];
+
+    for(var i = 0; i < data.length; i++){
+      for(property in data[i]){
+          if(property == "fileName"){
+            fileNames.push(data[i][property])
+          }
+      }
+    }
+    return fileNames;
   }
   //makes a restaurant search if found location
   function success(pos) {
