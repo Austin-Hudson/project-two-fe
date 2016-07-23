@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function(){
   $("#upload-form").on("submit", function(e){
     e.preventDefault(); //prevent refresh
     var formData = new FormData(this);
-    console.log(url + $(this).attr("action"));
+
     $.ajax({
        type: "POST",
        url: herokuURL + $(this).attr("action"),
@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function(){
   })
 
   searchBtn.addEventListener("click", function(){
-
       //  $(panel).slideDown("slow")
     userInput = document.querySelector("#location-text").value;
     if(userInput != null && userInput && undefined || userInput.length != 0){
@@ -58,8 +57,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
   commentBtn.addEventListener("click", function(){
           $("#panel").slideUp("slow");
-    // navigator.geolocation.getCurrentPosition(success,error)
-    // userInput = document.querySelector("#location-text").value;
   });
 
   showCommentsBtn.addEventListener("click", function(){
@@ -76,22 +73,22 @@ document.addEventListener("DOMContentLoaded", function(){
     //animate so the panels move
     $("#comment-panel").slideDown("slow")
   });
-
+  //display map
   function displayMap(response){
     currentLocation =  new google.maps.LatLng(latitude,longitude);
     map = new google.maps.Map(document.getElementById('map'), {
-    center: currentLocation,
-    zoom: 15
-  });
+      center: currentLocation,
+      zoom: 15
+    });
     displayResults(response.results);
-    console.log(response);
   }
-
+  //display the results on the google map from the search parameter
   function displayResults(results) {
     for (var i = 0; i < results.length; i++) {
       createMarker(results[i]);
     }
   }
+  //create marker on the google map
   function createMarker(res) {
       var marker = new google.maps.Marker({
         position: res.geometry.location,
@@ -119,6 +116,10 @@ document.addEventListener("DOMContentLoaded", function(){
             address.innerHTML = restaurant.address;
             rating.innerHTML = restaurant.rating;
 
+            //clear old comment
+            var commentArea = document.querySelector("#comment-area");
+            commentArea.value = "";
+
             //get images to display
             $.ajax({
               url: herokuURL + "restaurants/img",
@@ -134,17 +135,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
             //push comment
             var commentBtn = document.querySelector("#comment-btn");
-      
+
             commentBtn.addEventListener("click", function(){
 
             restaurant["comments"].push(document.querySelector("#comment-area").value);
-            //
-            // $.put(url + "restaurants/", restaurant, function(request, response){
-            //     console.log("Response:", response);
-            //     $("#comment-panel").slideUp("slow")
-            // }).done(function(data){
-            //   console.log(data);
-            // });
 
             $.ajax({
               url: url + 'restaurants/' + restaurant.name,
@@ -155,15 +149,11 @@ document.addEventListener("DOMContentLoaded", function(){
               console.log("Put response", response);
             }); // end ajax
 
-            // $.post('http://localhost:3000/restaurants', restaurant, function(response){
-            //     console.log("Response:", response);
-            // })
-
             });
         })
       });
     }
-
+  //displays images
   function displayImages(data){
     console.log(data);
     // 1. Initialize fotorama manually.
@@ -175,14 +165,18 @@ document.addEventListener("DOMContentLoaded", function(){
       fotorama.appendChild(img);
     }
   }
-
+  //displays the comments
   function displayComments(data){
     var commentPanel = document.querySelector("#comment-panel");
     commentPanel.innerHTML = "";
     var h2 = document.createElement("h2");
     h2.innerText = "Comments";
     commentPanel.appendChild(h2);
+    var restaurantName;
     for(property in data){
+      if(property == "name"){
+        restaurantName = data[property];
+      }
       if(property == "comments"){
         for(var i = 0; i < data[property].length; i++){
             var commentDiv = document.createElement("div");
@@ -191,12 +185,46 @@ document.addEventListener("DOMContentLoaded", function(){
             var context = document.createTextNode(data[property][i]);
             p.appendChild(context);
             commentDiv.appendChild(p);
+
+            var button = document.createElement("button");
+            button.classList.add("waves-effect");
+            button.classList.add("waves-light");
+            button.classList.add("btn");
+            var icon = document.createElement("i");
+            icon.classList.add("material-icons");
+            icon.innerHTML = "delete";
+            button.appendChild(icon);
+            commentDiv.appendChild(button);
             commentPanel.appendChild(commentDiv);
+
+            button.addEventListener("click", function(){
+              deleteComment(restaurantName,$(this).siblings());
+            });
+
+
           }
         }
       }
     }
 
+  //deletes the comment
+  function deleteComment(restaurantName, comment){
+    var commentValue = comment[0].innerText;
+    var data = {
+          name: restaurantName,
+          comment: commentValue
+        };
+      $.ajax({
+        url: url + "restaurants/" + restaurantName,
+        dataType: 'json',
+        data: data,
+        method: 'delete'
+      }).done(function(response){
+        console.log(commentValue + " has been deleted.");
+    }); // end ajax;
+
+  }
+  //makes a restaurant search if found location
   function success(pos) {
     latitude = pos.coords.latitude;
     longitude = pos.coords.longitude;
@@ -220,6 +248,7 @@ document.addEventListener("DOMContentLoaded", function(){
    }); // end ajax
   }
 
+  //if an error has occured
   function error(){
     var results = document.querySelector(".results");
     var p = document.createElement("p");

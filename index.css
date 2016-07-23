@@ -94,6 +94,12 @@
   background: white;
 }
 
+.comment button {
+  display: block;
+  margin: 0 auto;
+  background: gray; 
+}
+
 img {
   height: 100px;
   width: 100px;
@@ -106,4 +112,5 @@ h2 {
 }
 p {
   text-align: center;
+  margin-bottom: 0px;
 }
