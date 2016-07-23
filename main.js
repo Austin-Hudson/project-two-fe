@@ -69,11 +69,11 @@ document.addEventListener("DOMContentLoaded", function(){
   })
 
   searchBtn.addEventListener("click", function(){
-       $(panel).slideDown("slow")
-    // userInput = document.querySelector("#location-text").value;
-    // if(userInput != null && userInput && undefined || userInput.length != 0){
-    //     navigator.geolocation.getCurrentPosition(success,error)
-    // }
+       //$(panel).slideDown("slow")
+    userInput = document.querySelector("#location-text").value;
+    if(userInput != null && userInput && undefined || userInput.length != 0){
+        navigator.geolocation.getCurrentPosition(success,error)
+    }
   });
 
   commentBtn.addEventListener("click", function(){
