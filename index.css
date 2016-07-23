@@ -64,7 +64,7 @@
   position: relative;
 }
 
-#comment-btn, #submit-file-btn, #show-comments, #comment{
+#comment-btn, #submit-file-btn, #show-comments, #comment, #close-panel-btn, #close-comments-btn{
   background: gray;
 }
 
@@ -74,6 +74,11 @@
 
 #comment {
   margin-left: 3px;
+}
+
+#close-panel-btn, #close-comments-btn{
+  margin-right: 0px;
+  float: right;
 }
 
 .search {
@@ -97,7 +102,7 @@
 .comment button {
   display: block;
   margin: 0 auto;
-  background: gray; 
+  background: gray;
 }
 
 img {

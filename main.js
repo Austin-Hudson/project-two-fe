@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function(){
   var searchBtn = document.querySelector("#search-location");
   var commentBtn = document.querySelector("#comment-btn");
   var showCommentsBtn = document.querySelector("#show-comments");
+  var closeMainPanelBtn = document.querySelector("#close-panel-btn");
+  var closeCommentPanelBtn = document.querySelector("#close-comments-btn");
 
   var panel = document.querySelector("#panel");
   var latitude, longitude;
@@ -67,11 +69,11 @@ document.addEventListener("DOMContentLoaded", function(){
   })
 
   searchBtn.addEventListener("click", function(){
-      //  $(panel).slideDown("slow")
-    userInput = document.querySelector("#location-text").value;
-    if(userInput != null && userInput && undefined || userInput.length != 0){
-        navigator.geolocation.getCurrentPosition(success,error)
-    }
+       $(panel).slideDown("slow")
+    // userInput = document.querySelector("#location-text").value;
+    // if(userInput != null && userInput && undefined || userInput.length != 0){
+    //     navigator.geolocation.getCurrentPosition(success,error)
+    // }
   });
 
   commentBtn.addEventListener("click", function(){
@@ -92,6 +94,15 @@ document.addEventListener("DOMContentLoaded", function(){
     //animate so the panels move
     $("#comment-panel").slideDown("slow")
   });
+
+  closeMainPanelBtn.addEventListener("click", function(){
+    $("#panel").slideUp("slow")
+  })
+
+  closeCommentPanelBtn.addEventListener("click", function(){
+      $("#comment-panel").slideUp("slow")
+  });
+
   //display map
   function displayMap(response){
     currentLocation =  new google.maps.LatLng(latitude,longitude);
