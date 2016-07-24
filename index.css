@@ -38,14 +38,15 @@
   font-size: 32px;
 }
 #location-search{
-  text-align: center;
+  text-align: left;
+  width: 70%;
 }
 
 #location-text {
   width: 40%;
   text-align: center;
   height: 50px;
-  font-size: 42px;
+  font-size: 36px;
   margin-top: 10px;
   color: white;
 }
@@ -81,9 +82,21 @@
   float: right;
 }
 
+
+#title {
+  font-family: 'Lobster', cursive;
+  color: white;
+  margin-left: 5px;
+  text-align: left;
+  margin-top: 3px;
+  width: 35%;
+}
+
 .search {
   background: rgba(0,0,0,.8);
   height: 75px;
+  display: flex;
+  flex-direction: row;
 }
 .fotorama{
   height: 100px;
