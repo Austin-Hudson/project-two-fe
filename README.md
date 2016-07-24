@@ -5,7 +5,7 @@ Good Eats is a community web application where you discuss about food dishes in 
 
 ###### How To Use
 1. Search for a food category in your area. When you do this, restaurants with that type populate on a GoogleMap.
-2. Click on the POI(red flag) to start to comment on the restaurant.
+2. Click on the Marker(red) to start to comment on the restaurant.
 3. When you click on the comment button, a modal opens up
 displaying the name, address and rating of the restaurant.
 4. You can then upload images by first pressing 'Choose File', navigate to a file and then press 'Upload'. When you do the file gets uploaded to AWS S3.
@@ -18,4 +18,4 @@ Good Eats uses HTML, JavaScript, CSS Google Places API as well as integration of
 
 ###### Unresolved Problems
 
-The UX isn't as easy to use as I would like. I would like to make it more easy for the user. 
+The UX isn't as easy to use as I would like. I would like to make it more easy for the user.
