@@ -161,6 +161,7 @@ document.addEventListener("DOMContentLoaded", function(){
             var commentArea = document.querySelector("#comment-area");
             commentArea.value = "";
 
+            //add to db
             $.ajax({
               //url: herokuURL + "restaurants/img",
               url: url + "restaurants/",
