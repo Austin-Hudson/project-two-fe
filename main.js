@@ -212,10 +212,8 @@ document.addEventListener("DOMContentLoaded", function(){
   //displays the comments
   function displayComments(data){
     var commentPanel = document.querySelector("#comment-panel");
-    commentPanel.innerHTML = "";
-    var h2 = document.createElement("h2");
-    h2.innerText = "Comments";
-    commentPanel.appendChild(h2);
+    var comments = document.querySelector(".comments");
+    comments.innerHTML = "";    
     var restaurantName;
     for(property in data){
       if(property == "name"){
@@ -234,12 +232,14 @@ document.addEventListener("DOMContentLoaded", function(){
             button.classList.add("waves-effect");
             button.classList.add("waves-light");
             button.classList.add("btn");
+            button.id = "delete-btn";
             var icon = document.createElement("i");
             icon.classList.add("material-icons");
             icon.innerHTML = "delete";
             button.appendChild(icon);
             commentDiv.appendChild(button);
-            commentPanel.appendChild(commentDiv);
+            comments.appendChild(commentDiv);
+            commentPanel.appendChild(comments);
 
             button.addEventListener("click", function(){
               deleteComment(restaurantName,$(this).siblings());

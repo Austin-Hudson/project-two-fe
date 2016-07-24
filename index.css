@@ -7,19 +7,21 @@
 #panel {
   height: 100vh;
   width: 40%;
-  background: rgba(0, 0, 0, .1);
+  background: rgba(12, 12, 110, .4);
   display: none;
   position: absolute;
   z-index: 5;
+  color: white;
 }
 
 #comment-panel {
   height: 100vh;
   width: 40%;
-  background: rgba(0, 0, 0, .1);
+  background: rgba(12, 12, 110, .4);
   position: absolute;
   right: 0;
   display: none;
+  color: white;
 }
 
 #comment-form {
@@ -65,7 +67,7 @@
   position: relative;
 }
 
-#comment-btn, #submit-file-btn, #show-comments, #comment, #close-panel-btn, #close-comments-btn{
+#comment-btn, #submit-file-btn, #show-comments, #comment, #close-panel-btn, #close-comments-btn, #delete-btn{
   background: gray;
 }
 
@@ -103,13 +105,14 @@
 }
 
 .comment {
-  border: 2px solid blue;
+  border: 2px solid black;
   height: 80px;
   width: 50%;
   border-radius: 25px;
   margin: 0 auto;
   display: block;
   background: white;
+  color: black;
 }
 
 .comment button {
