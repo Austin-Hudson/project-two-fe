@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function(){
    };
    $.ajax({
       type: "POST",
-      url: herokuURL + "restaurant/" + restaurantName,
+      url: url + "restaurant/" + restaurantName,
       data: data,
       dataType: 'json'
    }).done(function(response){
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function(){
     console.log(herokuURL + "restaurants/" + name);
     $.ajax({
       //url: herokuURL + "restaurants/" + name,
-      url: herokuURL + "restaurants/" + name,
+      url: url + "restaurants/" + name,
       dataType: 'json'
     }).done(function(data){
         displayComments(JSON.parse(data));
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function(){
     console.log("comments: ", restaurant["comments"]);
 
       $.ajax({
-        url: herokuURL + 'restaurants/' + restaurant.name,
+        url: url + 'restaurants/' + restaurant.name,
         dataType: 'json',
         method: 'put',
         data: restaurant
@@ -161,27 +161,38 @@ document.addEventListener("DOMContentLoaded", function(){
             var commentArea = document.querySelector("#comment-area");
             commentArea.value = "";
 
-            //get image by name and corressponding restaurant-name
             $.ajax({
-              url: herokuURL + "restaurants/favorite/" + restaurant.name,
-              dataType: 'json'
+              //url: herokuURL + "restaurants/img",
+              url: url + "restaurants/",
+              dataType: 'json',
+              data: restaurant,
+              method: "POST"
             }).done(function(data){
-                var fileNames = parseForFileNames(data);
-                var d = {
-                  files: fileNames
-                };
-                //get images to display
-                $.ajax({
-                  //url: herokuURL + "restaurants/img",
-                  url: herokuURL + "restaurants/img",
-                  dataType: 'json',
-                  data: d,
-                  method: "POST"
-                }).done(function(data){
-                  //console.log(data);
-                  displayImages(data);
-                });
-            })
+              //console.log(data);
+              //get image by name and corressponding restaurant-name
+              $.ajax({
+                url: url + "restaurants/favorite/" + restaurant.name,
+                dataType: 'json'
+              }).done(function(data){
+                  var fileNames = parseForFileNames(data);
+                  var d = {
+                    files: fileNames
+                  };
+                  //get images to display
+                  $.ajax({
+                    //url: herokuURL + "restaurants/img",
+                    url: url + "restaurants/img",
+                    dataType: 'json',
+                    data: d,
+                    method: "POST"
+                  }).done(function(data){
+                    //console.log(data);
+                    displayImages(data);
+                  });
+              })
+            });
+
+
 
             //animate so the panels move
             $(panel).slideDown("slow")
@@ -250,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function(){
           comment: commentValue
         };
       $.ajax({
-        url: herokuURL + "restaurants/" + restaurantName,
+        url: url + "restaurants/" + restaurantName,
         dataType: 'json',
         data: data,
         method: 'delete'
@@ -288,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     $.ajax({
      //url: url + '/restaurant/search',
-     url: herokuURL + "restaurant/search",
+     url: url + "restaurant/search",
      method: 'POST',
      data: data,
      dataType: 'json'
