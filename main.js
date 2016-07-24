@@ -171,29 +171,32 @@ document.addEventListener("DOMContentLoaded", function(){
             }).done(function(data){
               //console.log(data);
               //get image by name and corressponding restaurant-name
-              $.ajax({
-                url: herokuURL + "restaurants/favorite/" + restaurant.name,
-                dataType: 'json'
-              }).done(function(data){
-                  var fileNames = parseForFileNames(data);
-                  var d = {
-                    files: fileNames
-                  };
-                  //get images to display
-                  $.ajax({
-                    //url: herokuURL + "restaurants/img",
-                    url: herokuURL + "restaurants/img",
-                    dataType: 'json',
-                    data: d,
-                    method: "POST"
-                  }).done(function(data){
-                    //console.log(data);
-                    displayImages(data);
-                  });
-              })
             });
+
+            $.ajax({
+              url: herokuURL + "restaurants/favorite/" + restaurant.name,
+              dataType: 'json'
+            }).done(function(data){
+                var fileNames = parseForFileNames(data);
+                var d = {
+                  files: fileNames
+                };
+                //get images to display
+                $.ajax({
+                  //url: herokuURL + "restaurants/img",
+                  url: herokuURL + "restaurants/img",
+                  dataType: 'json',
+                  data: d,
+                  method: "POST"
+                }).done(function(data){
+                  //console.log(data);
+                  displayImages(data);
+                });
+            })
+
             //animate so the panels move
             $(panel).slideDown("slow")
+
         });
       });
     }
