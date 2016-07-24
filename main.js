@@ -192,10 +192,8 @@ document.addEventListener("DOMContentLoaded", function(){
                   });
               })
             });
-
             //animate so the panels move
             $(panel).slideDown("slow")
-
         });
       });
     }
