@@ -295,6 +295,9 @@ document.addEventListener("DOMContentLoaded", function(){
    }).done(function(response) {
       displayMap(response);
    }); // end ajax
+
+     $(panel).slideUp("slow")
+     $("#comment-panel").slideUp("slow")
   }
 
   //if an error has occured
