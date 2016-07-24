@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   //image to save
   var uploadedImage;
+  var restaurant;
 
   /*
     After speaking with Harry Hur, reading the AWS S3 Docs and looking at tutorials
@@ -66,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function(){
      console.log("saved fileName with restaurant");
    });
 
-  })
+ });
 
   searchBtn.addEventListener("click", function(){
        //$(panel).slideDown("slow")
@@ -74,10 +75,6 @@ document.addEventListener("DOMContentLoaded", function(){
     if(userInput != null && userInput && undefined || userInput.length != 0){
         navigator.geolocation.getCurrentPosition(success,error)
     }
-  });
-
-  commentBtn.addEventListener("click", function(){
-          $("#panel").slideUp("slow");
   });
 
   showCommentsBtn.addEventListener("click", function(){
@@ -90,14 +87,28 @@ document.addEventListener("DOMContentLoaded", function(){
     }).done(function(data){
         displayComments(JSON.parse(data));
     });
-
     //animate so the panels move
     $("#comment-panel").slideDown("slow")
   });
 
+    commentBtn.addEventListener("click", function(){
+    restaurant["comments"].push(document.querySelector("#comment-area").value);
+    console.log("comments: ", restaurant["comments"]);
+
+      $.ajax({
+        url: url + 'restaurants/' + restaurant.name,
+        dataType: 'json',
+        method: 'put',
+        data: restaurant
+      }).done(function(response){
+        console.log("Put response", response);
+      }); // end ajax
+
+    });
+
   closeMainPanelBtn.addEventListener("click", function(){
     $("#panel").slideUp("slow")
-  })
+  });
 
   closeCommentPanelBtn.addEventListener("click", function(){
       $("#comment-panel").slideUp("slow")
@@ -132,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function(){
         infoWindow.open(map, this);
 
         document.querySelector("#comment").addEventListener("click", function(){
-          var restaurant = {
+          restaurant = {
             name: res.name,
             address: res.vicinity,
             rating: res.rating,
@@ -172,29 +183,11 @@ document.addEventListener("DOMContentLoaded", function(){
                 });
             })
 
-
-
             //animate so the panels move
             $(panel).slideDown("slow")
 
-            //push comment
-            var commentBtn = document.querySelector("#comment-btn");
 
-            commentBtn.addEventListener("click", function(){
-
-            restaurant["comments"].push(document.querySelector("#comment-area").value);
-
-            $.ajax({
-              url: url + 'restaurants/' + restaurant.name,
-              dataType: 'json',
-              method: 'put',
-              data: restaurant
-            }).done(function(response){
-              console.log("Put response", response);
-            }); // end ajax
-
-            });
-        })
+        });
       });
     }
   //displays images
@@ -213,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function(){
   function displayComments(data){
     var commentPanel = document.querySelector("#comment-panel");
     var comments = document.querySelector(".comments");
-    comments.innerHTML = "";    
+    comments.innerHTML = "";
     var restaurantName;
     for(property in data){
       if(property == "name"){
