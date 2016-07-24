@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     $.ajax({
      //url: url + '/restaurant/search',
-     url: herokuURL + "restaurant/search",
+     url: url + "restaurant/search",
      method: 'POST',
      data: data,
      dataType: 'json'
