@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function(){
    };
    $.ajax({
       type: "POST",
-      url: url + "restaurant/" + restaurantName,
+      url: herokuURL + "restaurant/" + restaurantName,
       data: data,
       dataType: 'json'
    }).done(function(response){
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function(){
     console.log(herokuURL + "restaurants/" + name);
     $.ajax({
       //url: herokuURL + "restaurants/" + name,
-      url: url + "restaurants/" + name,
+      url: herokuURL + "restaurants/" + name,
       dataType: 'json'
     }).done(function(data){
         displayComments(JSON.parse(data));
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function(){
     console.log("comments: ", restaurant["comments"]);
 
       $.ajax({
-        url: url + 'restaurants/' + restaurant.name,
+        url: herokuURL + 'restaurants/' + restaurant.name,
         dataType: 'json',
         method: 'put',
         data: restaurant
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
             //get image by name and corressponding restaurant-name
             $.ajax({
-              url: url + "restaurants/favorite/" + restaurant.name,
+              url: herokuURL + "restaurants/favorite/" + restaurant.name,
               dataType: 'json'
             }).done(function(data){
                 var fileNames = parseForFileNames(data);
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 //get images to display
                 $.ajax({
                   //url: herokuURL + "restaurants/img",
-                  url: url + "restaurants/img",
+                  url: herokuURL + "restaurants/img",
                   dataType: 'json',
                   data: d,
                   method: "POST"
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function(){
           comment: commentValue
         };
       $.ajax({
-        url: url + "restaurants/" + restaurantName,
+        url: herokuURL + "restaurants/" + restaurantName,
         dataType: 'json',
         data: data,
         method: 'delete'
@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     $.ajax({
      //url: url + '/restaurant/search',
-     url: url + "restaurant/search",
+     url: herokuURL + "restaurant/search",
      method: 'POST',
      data: data,
      dataType: 'json'
